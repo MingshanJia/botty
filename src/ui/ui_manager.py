@@ -633,6 +633,14 @@ class UiManager():
             use_grayscale=True)
         return template_match.valid
 
+    def arrow_needed(self) -> bool:
+        template_match = self._template_finder.search(
+            "ARROW_NEEDED",
+            self._screen.grab(),
+            roi=self._config.ui_roi["repair_needed"],
+            use_grayscale=True)
+        return template_match.valid
+
     def gambling_needed(self) -> bool:
         return self._gold_full
 
@@ -742,6 +750,33 @@ class UiManager():
             for _ in range(mana_pots):
                 mouse.click(button="right")
                 wait(0.9, 1.1)
+
+    def replenish_arrow(self):
+
+        misc_x, misc_y = self._screen.convert_screen_to_monitor((self._config.ui_pos["vendor_misc_x"], self._config.ui_pos["vendor_misc_y"]))
+        inventory_x, inventory_y = self._screen.convert_screen_to_monitor((875, 360))
+        equip_x, equip_y = self._screen.convert_screen_to_monitor((1170, 180))
+        drop_x, drop_y = self._screen.convert_screen_to_monitor((self._config.ui_pos["center_x"], self._config.ui_pos["center_y"]))
+
+        mouse.move(misc_x, misc_y, randomize=8, delay_factor=[1.0, 1.5])
+        mouse.click(button="left")
+
+        arrow = self._template_finder.search_and_wait("ARROW", roi=self._config.ui_roi["left_inventory"], time_out=3, normalize_monitor=True)
+        if arrow.valid:
+            mouse.move(*arrow.center, randomize=8, delay_factor=[1.0, 1.5])
+            mouse.click(button="right")
+            wait(0.9, 1.1)
+
+            mouse.move(inventory_x, inventory_y, randomize=8, delay_factor=[1.0, 1.5])
+            mouse.click(button="left")
+            wait(0.9, 1.1)
+
+            mouse.move(equip_x, equip_y, randomize=8, delay_factor=[1.0, 1.5])
+            mouse.click(button="left")
+            wait(0.9, 1.1)
+
+            mouse.move(drop_x, drop_y, randomize=8, delay_factor=[1.0, 1.5])
+            mouse.click(button="left")
 
 
 # Testing: Move to whatever ui to test and run

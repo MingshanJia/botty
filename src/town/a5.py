@@ -27,13 +27,13 @@ class A5(IAct):
     def can_trade_and_repair(self) -> bool: return True
 
     def heal(self, curr_loc: Location) -> Union[Location, bool]:
-        if not self._pather.traverse_nodes((curr_loc, Location.A5_MALAH), self._char, force_move=True): return False
+        if not self._pather.traverse_nodes((curr_loc, Location.A5_MALAH), self._char): return False
         if not self._npc_manager.open_npc_menu(Npc.MALAH): return False
-        if not self._pather.traverse_nodes((Location.A5_MALAH, Location.A5_TOWN_START), self._char, force_move=True): return False
+        if not self._pather.traverse_nodes((Location.A5_MALAH, Location.A5_TOWN_START), self._char): return False
         return Location.A5_TOWN_START
 
     def open_trade_menu(self, curr_loc: Location) -> Union[Location, bool]:
-        if not self._pather.traverse_nodes((curr_loc, Location.A5_MALAH), self._char, force_move=True): return False
+        if not self._pather.traverse_nodes((curr_loc, Location.A5_MALAH), self._char): return False
         if self._npc_manager.open_npc_menu(Npc.MALAH):
             self._npc_manager.press_npc_btn(Npc.MALAH, "trade")
             return Location.A5_MALAH

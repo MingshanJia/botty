@@ -336,6 +336,13 @@ class Bot:
             self._tps_left = 20
             wait(1.0)
 
+        # check if we are low at arrows
+        need_arrow = self._ui_manager.arrow_needed()
+        if need_arrow:
+            Logger.info("Need to buy arrow")
+            self._curr_loc = self._town_manager.replenish_arrow(self._curr_loc)
+            wait(1.0)
+
         # Check if merc needs to be revived
         merc_alive = self._template_finder.search(["MERC_A2","MERC_A1","MERC_A5","MERC_A3"], self._screen.grab(), threshold=0.9, roi=self._config.ui_roi["merc_icon"]).valid
         if not merc_alive and self._config.char["use_merc"]:
