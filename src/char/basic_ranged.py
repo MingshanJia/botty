@@ -12,6 +12,8 @@ import random
 import numpy as np
 from pather import Pather, Location
 
+# spray: is the fanshaped attacking area
+
 
 class Basic_Ranged(IChar):
     def __init__(self, skill_hotkeys: dict, screen: Screen, template_finder: TemplateFinder, ui_manager: UiManager, pather: Pather):
@@ -30,16 +32,16 @@ class Basic_Ranged(IChar):
             mouse.move(*pos_m)
             mouse.click(button="left")
 
+    # summon valkyrie
     def _right_attack(self, cast_pos_abs: tuple[float, float], delay: tuple[float, float] = (0.2, 0.3), spray: float = 10):
         if not self._skill_hotkeys["right_attack"]:
             raise ValueError("You did not set right attack hotkey!")
         keyboard.send(self._skill_hotkeys["right_attack"])
-        for _ in range(3):
-            x = cast_pos_abs[0] + (random.random() * 2 * spray - spray)
-            y = cast_pos_abs[1] + (random.random() * 2 * spray - spray)
-            cast_pos_monitor = self._screen.convert_abs_to_monitor((x, y))
-            mouse.move(*cast_pos_monitor)
-            mouse.click(button="right")
+        x = cast_pos_abs[0] + (random.random() * 2 * spray - spray)
+        y = cast_pos_abs[1] + (random.random() * 2 * spray - spray)
+        cast_pos_monitor = self._screen.convert_abs_to_monitor((x, y))
+        mouse.move(*cast_pos_monitor)
+        mouse.click(button="right")
 
     def pre_buff(self):
         if self._skill_hotkeys["buff_1"]:
@@ -61,13 +63,11 @@ class Basic_Ranged(IChar):
         cast_pos_abs = [pindle_pos_abs[0] * 0.9, pindle_pos_abs[1] * 0.9]
         start = time.time()
         keyboard.send(self._char_config["stand_still"], do_release=False)
+        wait(0.05, 0.1)
+        self._right_attack(cast_pos_abs, spray=11)
         while (time.time() - start) < self._char_config["atk_len_pindle"]:
-            if self._ui_manager.is_right_skill_active():
-                wait(0.05, 0.1)
-                self._right_attack(cast_pos_abs, spray=11)
-            else:
-                wait(0.05, 0.1)
-                self._left_attack(cast_pos_abs, spray=11)
+            wait(0.05, 0.1)
+            self._left_attack(cast_pos_abs, spray=10)
         keyboard.send(self._char_config["stand_still"], do_press=False)
         wait(self._cast_duration, self._cast_duration + 0.2)
         # Move to items

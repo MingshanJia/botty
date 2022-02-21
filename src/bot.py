@@ -336,6 +336,7 @@ class Bot:
             self._tps_left = 20
             wait(1.0)
 
+
         # check if we are low at arrows
         need_arrow = self._ui_manager.arrow_needed()
         if need_arrow:
