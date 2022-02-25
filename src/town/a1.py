@@ -47,7 +47,7 @@ class A1(IAct):
 
     def wait_for_tp(self) -> Union[Location, bool]:
         success = self._template_finder.search_and_wait(["A1_TOWN_7", "A1_TOWN_9"], time_out=20).valid
-        if not self._pather.traverse_nodes([Location.A1_TOWN_TP, Location.A1_KASHYA_CAIN], self._char, force_move=True): return False
+        if not self._pather.traverse_nodes([Location.A1_TOWN_TP, Location.A1_KASHYA_CAIN], self._char): return False
         if success:
             return Location.A1_KASHYA_CAIN
         return False
@@ -60,7 +60,7 @@ class A1(IAct):
         return False
 
     def open_trade_menu(self, curr_loc: Location) -> Union[Location, bool]:
-        if not self._pather.traverse_nodes((curr_loc, Location.A1_AKARA), self._char, force_move=True): return False
+        if not self._pather.traverse_nodes((curr_loc, Location.A1_AKARA), self._char): return False
         self._npc_manager.open_npc_menu(Npc.AKARA)
         self._npc_manager.press_npc_btn(Npc.AKARA, "trade")
         return Location.A1_AKARA
@@ -79,7 +79,7 @@ class A1(IAct):
         return Location.A1_STASH
 
     def heal(self, curr_loc: Location) -> Union[Location, bool]:
-        if not self._pather.traverse_nodes((curr_loc, Location.A1_AKARA), self._char, force_move=True): return False
+        if not self._pather.traverse_nodes((curr_loc, Location.A1_AKARA), self._char): return False
         self._npc_manager.open_npc_menu(Npc.AKARA)
         return Location.A1_AKARA
 

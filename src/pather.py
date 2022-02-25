@@ -51,6 +51,8 @@ class Location:
     A3_ORMUS = "a3_ormus"
     A3_STASH_WP = "a3_stash_wp"
     A3_ASHEARA = "a3_asheara"
+    # newly added
+    A3_HRATLI = "a3_hratli"
     # A2 Town
     A2_TOWN_START = "a2_town_start"
     A2_WP = "a2_wp"
@@ -121,12 +123,15 @@ class Pather:
             100: {'PINDLE_7': (384, -92), 'PINDLE_0': (-97, -40), 'PINDLE_1': (-13, 223), 'PINDLE_2': (-366, 85)},
             101: {'PINDLE_1': (371, -45), 'PINDLE_2': (18, -184), 'PINDLE_3': (-123, 261)},
             102: {'PINDLE_3': (223, 88), 'PINDLE_4': (95, 215)},
-            103: {'PINDLE_3': (395, -75), 'PINDLE_4': (267, 52)},
+
+            # 103: {'PINDLE_3': (395, -75), 'PINDLE_4': (267, 52)},
+            103: {'PINDLE_3': (405, -75)},
             104: {'PINDLE_4': (717, -117), 'PINDLE_3': (843, -244), 'PINDLE_5': (-187, 237), 'PINDLE_6': (-467, 89)},
             # Eldritch
             120: {'ELDRITCH_0': (293, 24), 'ELDRITCH_1': (-307, 76), 'ELDRITCH_5': (27, -164), 'ELDRITCH_6': (400, -50)},
             121: {'ELDRITCH_6': (360, -244), 'ELDRITCH_1': (-329, -103), 'ELDRITCH_2': (411, 171), 'ELDRITCH_3': (-91, 198), 'ELDRITCH_7': (409, 180), 'ELDRITCH_8': (465, 345)},
-            122: {'ELDRITCH_2': (353, -145), 'ELDRITCH_3': (-149, -119), 'ELDRITCH_9': (-253, -118), 'ELDRITCH_7': (352, -134), 'ELDRITCH_8': (404, 29)},
+            # 122: {'ELDRITCH_2': (353, -145), 'ELDRITCH_3': (-149, -119), 'ELDRITCH_9': (-253, -118), 'ELDRITCH_7': (352, -134), 'ELDRITCH_8': (404, 29)},
+            122: {'ELDRITCH_2': (353, 0)},
             123: {'ELDRITCH_3': (-99, -252), 'ELDRITCH_2': (403, -279), 'ELDRITCH_4': (-62, -109), 'ELDRITCH_9': (-204, -254), 'ELDRITCH_8': (400, -267), 'ELDRITCH_8': (454, -104)},
             # Shenk
             141: {'SHENK_0': (-129, 44), 'SHENK_1': (464, 107), 'SHENK_2': (-167, -34), 'SHENK_17': (-520, 528), 'SHENK_15': (77, 293), 'SHENK_18': (518, 512)},

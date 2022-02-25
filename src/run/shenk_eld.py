@@ -48,7 +48,7 @@ class ShenkEld:
         if self._char.capabilities.can_teleport_natively:
             self._pather.traverse_nodes_fixed("eldritch_safe_dist", self._char)
         else:
-            if not self._pather.traverse_nodes((Location.A5_ELDRITCH_START, Location.A5_ELDRITCH_SAFE_DIST), self._char, force_move=True):
+            if not self._pather.traverse_nodes((Location.A5_ELDRITCH_START, Location.A5_ELDRITCH_SAFE_DIST), self._char):
                 return False
         self._char.kill_eldritch()
         loc = Location.A5_ELDRITCH_END
@@ -60,6 +60,7 @@ class ShenkEld:
             Logger.info("Run Shenk")
             game_stats.update_location("Shk" if self._config.general['discord_status_condensed'] else "Shenk")
             self._curr_loc = Location.A5_SHENK_START
+
             # No force move, otherwise we might get stuck at stairs!
             if not self._pather.traverse_nodes((Location.A5_SHENK_START, Location.A5_SHENK_SAFE_DIST), self._char):
                 return False

@@ -43,6 +43,17 @@ class Basic_Ranged(IChar):
         mouse.move(*cast_pos_monitor)
         mouse.click(button="right")
 
+    def _switch_left_attack(self, cast_pos_abs: tuple[float, float], delay: tuple[float, float] = (0.2, 0.3), spray: float = 10):
+        if not self._skill_hotkeys["switch_left_attack"]:
+            raise ValueError("You did not set right attack hotkey!")
+        keyboard.send(self._skill_hotkeys["switch_left_attack"])
+        x = cast_pos_abs[0] + (random.random() * 2 * spray - spray)
+        y = cast_pos_abs[1] + (random.random() * 2 * spray - spray)
+        cast_pos_monitor = self._screen.convert_abs_to_monitor((x, y))
+        mouse.move(*cast_pos_monitor)
+        mouse.click(button="left")
+
+
     def pre_buff(self):
         if self._skill_hotkeys["buff_1"]:
             keyboard.send(self._skill_hotkeys["buff_1"])
@@ -64,10 +75,12 @@ class Basic_Ranged(IChar):
         start = time.time()
         keyboard.send(self._char_config["stand_still"], do_release=False)
         wait(0.05, 0.1)
-        self._right_attack(cast_pos_abs, spray=11)
+        self._right_attack(cast_pos_abs, spray=8)
+        # Logger.info("right attack!")
         while (time.time() - start) < self._char_config["atk_len_pindle"]:
             wait(0.05, 0.1)
-            self._left_attack(cast_pos_abs, spray=10)
+            self._left_attack(cast_pos_abs, spray=9)
+            # Logger.info("left attack!")
         keyboard.send(self._char_config["stand_still"], do_press=False)
         wait(self._cast_duration, self._cast_duration + 0.2)
         # Move to items
@@ -80,17 +93,30 @@ class Basic_Ranged(IChar):
         cast_pos_abs = [eld_pos_abs[0] * 0.9, eld_pos_abs[1] * 0.9]
         start = time.time()
         keyboard.send(self._char_config["stand_still"], do_release=False)
+        # switch weapon, use lighting fury
+        keyboard.send(self._char_config["weapon_switch"])
+        wait(0.3, 0.35)
+
+        self._right_attack(cast_pos_abs, spray=8)
+        # Logger.info("right attack!")
         while (time.time() - start) < self._char_config["atk_len_eldritch"]:
-            if self._ui_manager.is_right_skill_active():
-                wait(0.05, 0.1)
-                self._right_attack(cast_pos_abs, spray=11)
-            else:
-                wait(0.05, 0.1)
-                self._left_attack(cast_pos_abs, spray=11)
+            wait(0.05, 0.1)
+            self._switch_left_attack(cast_pos_abs, spray=10)
+            # Logger.info("left attack!")
+
+        # while (time.time() - start) < self._char_config["atk_len_eldritch"]:
+        #     if self._ui_manager.is_right_skill_active():
+        #         wait(0.05, 0.1)
+        #         self._right_attack(cast_pos_abs, spray=11)
+        #     else:
+        #         wait(0.05, 0.1)
+        #         self._left_attack(cast_pos_abs, spray=11)
         keyboard.send(self._char_config["stand_still"], do_press=False)
         wait(self._cast_duration, self._cast_duration + 0.2)
         # Move to items
         self._pather.traverse_nodes((Location.A5_ELDRITCH_SAFE_DIST, Location.A5_ELDRITCH_END), self, time_out=1.4, force_tp=True)
+        keyboard.send(self._char_config["weapon_switch"])
+        wait(0.3, 0.35)
         return True
 
     def kill_shenk(self) -> bool:
@@ -99,18 +125,20 @@ class Basic_Ranged(IChar):
             shenk_pos_abs = self._screen.convert_screen_to_abs(self._config.path["shenk_end"][0])
         cast_pos_abs = [shenk_pos_abs[0] * 0.9, shenk_pos_abs[1] * 0.9]
         start = time.time()
+        keyboard.send(self._char_config["weapon_switch"])
+        wait(0.3, 0.35)
+        self._right_attack(cast_pos_abs, spray=8)
+
         keyboard.send(self._char_config["stand_still"], do_release=False)
         while (time.time() - start) < self._char_config["atk_len_shenk"]:
-            if self._ui_manager.is_right_skill_active():
-                wait(0.05, 0.1)
-                self._right_attack(cast_pos_abs, spray=11)
-            else:
-                wait(0.05, 0.1)
-                self._left_attack(cast_pos_abs, spray=11)
+            wait(0.05, 0.1)
+            self._left_attack(cast_pos_abs, spray=9)
         keyboard.send(self._char_config["stand_still"], do_press=False)
         wait(self._cast_duration, self._cast_duration + 0.2)
         # Move to items
         self._pather.traverse_nodes((Location.A5_SHENK_SAFE_DIST, Location.A5_SHENK_END), self, time_out=1.4, force_tp=True)
+        keyboard.send(self._char_config["weapon_switch"])
+        wait(0.3, 0.35)
         return True
 
     def kill_council(self) -> bool:

@@ -755,7 +755,7 @@ class UiManager():
 
         misc_x, misc_y = self._screen.convert_screen_to_monitor((self._config.ui_pos["vendor_misc_x"], self._config.ui_pos["vendor_misc_y"]))
         inventory_x, inventory_y = self._screen.convert_screen_to_monitor((875, 360))
-        equip_x, equip_y = self._screen.convert_screen_to_monitor((1170, 180))
+        equip_x, equip_y = self._screen.convert_screen_to_monitor((1175, 180))
         drop_x, drop_y = self._screen.convert_screen_to_monitor((self._config.ui_pos["center_x"], self._config.ui_pos["center_y"]))
 
         mouse.move(misc_x, misc_y, randomize=8, delay_factor=[1.0, 1.5])

@@ -46,7 +46,7 @@ class PickIt:
         same_item_timer = None
         did_force_move = False
         while not time_out:
-            if (time.time() - start) > 28:
+            if (time.time() - start) > 6:
                 time_out = True
                 Logger.warning("Got stuck during pickit, skipping it this time...")
                 break
@@ -91,9 +91,9 @@ class PickIt:
                     if same_item_timer is None or not is_same_item:
                         same_item_timer = time.time()
                         did_force_move = False
-                    elif time.time() - same_item_timer > 1 and not did_force_move:
-                        force_move = True
-                        did_force_move = True
+                    # elif time.time() - same_item_timer > 1 and not did_force_move:
+                    #     force_move = True
+                    #     did_force_move = True
                     elif time.time() - same_item_timer > 3:
                         # backlist this item type for this pickit round
                         Logger.warning(f"Could not pick up: {closest_item.name}. Continue with other items")
@@ -132,7 +132,8 @@ class PickIt:
                         picked_up_items.append(closest_item.name)
                 else:
                     char.pre_move()
-                    char.move((x_m, y_m), force_move=True)
+                    # char.move((x_m, y_m), force_move=True)
+                    char.move((x_m, y_m), force_move=False)
                     if not char.capabilities.can_teleport_natively:
                         time.sleep(0.3)
                     time.sleep(0.1)
